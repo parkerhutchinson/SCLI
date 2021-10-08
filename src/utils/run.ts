@@ -1,6 +1,6 @@
 
 /**
- * @description small wrapper around running subprocesses like npx
+ * @description small wrapper around running subprocesses
  * @param commands string[]: array of commands to run.
  */
 const run = async (commands: string[]): Promise<void> => {

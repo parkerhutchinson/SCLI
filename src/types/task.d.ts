@@ -4,5 +4,5 @@ type flag = {
 export type task = {
   command: string
   flags: flag[],
-  exec: (name:string) => Promise<any>
+  exec: (name:string) => Promise<unknown>
 }

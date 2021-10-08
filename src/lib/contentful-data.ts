@@ -8,7 +8,7 @@ interface IFetchConfig {
 
 type response = {
   status: "success"|"error",
-  data: { [index: string]: string }
+  data: { [index: string]: unknown }
 }
 
 /**
@@ -20,7 +20,7 @@ type response = {
 export const manageContentfulData = async (
   type: string,
   update: boolean,
-  data?: { [index: string]: string }
+  data?: { [payload: string]: unknown }
 ): Promise<response> => {
   const auth: string | undefined = Deno.env.get("CONTENTFUL_MANAGEMENT_ACCESS_TOKEN");
 
