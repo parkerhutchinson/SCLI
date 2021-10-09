@@ -2,7 +2,6 @@ import { Command } from "./types/command.d.ts";
 import contentfulCommand from "./commands/contentful/index.ts";
 
 
-
 const COMMANDS:Command[] = [contentfulCommand];
 
 COMMANDS.forEach(
