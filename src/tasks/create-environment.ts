@@ -1,32 +1,42 @@
-import yargs from "https://cdn.deno.land/yargs/versions/yargs-v16.2.1-deno/raw/deno.ts";
 import log from "../utils/log.ts";
-import {task as TTask} from "../types/task.d.ts";
+import {Task} from "../types/task.d.ts";
 import {manageContentfulData} from "../lib/contentful-data.ts";
+import yargs from "https://cdn.deno.land/yargs/versions/yargs-v16.2.1-deno/raw/deno.ts";
 
-// testing user supplied data
-interface IArguments {
-  "create-env": string;
+
+interface Flags {
+  name: string;
 }
 
-// sub command ideation
-// const COMMANDS = 'contentful'|'stereo';
-// const subCommandExists = SubCommandList.includes(Deno.args[0]);
+/**
+ * 
+ * @param name string: the environment name
+ * @returns 
+ */
+const createEnvironment = async (args:string[]) => {
+  const flags: Flags = yargs(args).argv;
 
-const InputArgs: IArguments = yargs(Deno.args).argv;
-console.log(InputArgs);
-
-log(InputArgs["create-env"], "blue");
-
-
-const createEnvironment = async (name:string) => {
+  if (!flags['name']) {
+    log("name flag not provided", "red");
+    return;
+  }
+  
+  log(`creating environment ${flags['name']}`, "green");
   const {status: environmentStatus, data: environmentData} = await manageContentfulData('environments', false);
+
+  if (environmentStatus === 'error') {
+    return environmentData.message;
+  }
+  
   return environmentData;
 }
 
-const task:TTask = {
-  command: 'create-env',
-  flags: [{name: '--name'}],
-  exec: async (name:string) => await createEnvironment(name)
+const createEnvironmentTask:Task = {
+  name: 'create-env',
+  exec: async (args:string[]) => await createEnvironment(args)
 }
 
-export default task;
+export default createEnvironmentTask;
+
+
+

@@ -1,25 +1,12 @@
-import yargs from "https://cdn.deno.land/yargs/versions/yargs-v16.2.1-deno/raw/deno.ts";
 import log from "./utils/log.ts";
-import run from "./utils/run.ts";
-import createEnvTask from "./tasks/create-environment.ts";
+import { Command } from "./types/command.d.ts";
+import contentfulCommand from "./commands/contentful/index.ts";
 
-// testing my subproccess wrapper.
-await run(["npx", "contentful-migrate"]);
+const COMMANDS = [contentfulCommand];
 
-// testing the task API 
-const data = await createEnvTask.exec('test');
-console.log(data);
-
-// testing user supplied data
-interface IArguments {
-  "create-env": string;
-}
-
-// sub command ideation
-// const COMMANDS = 'contentful'|'stereo';
-// const subCommandExists = SubCommandList.includes(Deno.args[0]);
-
-const InputArgs: IArguments = yargs(Deno.args).argv;
-console.log(InputArgs);
-
-log(InputArgs["create-env"], "blue");
+console.log(Deno.args[0]);
+COMMANDS.forEach(
+  (command: Command) => 
+    Deno.args[0] === command.name 
+      && command.exec(Deno.args)
+);
