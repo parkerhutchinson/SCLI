@@ -1,7 +1,7 @@
 import createEnvironmentTask from "../../tasks/create-environment.ts";
 import { Task } from "../../types/task.d.ts";
 import { Command } from "../../types/command.d.ts";
-import taskRunner from "../../lib/task-runner.ts";
+import taskRunner from "../../utils/task-runner.ts";
 
 const subTasks: Task[] = [createEnvironmentTask];
 
