@@ -3,6 +3,7 @@ interface IFetchConfig {
   object: {
     method: string;
     headers: { [index: string]: string };
+    body?: string;
   };
 }
 
@@ -23,14 +24,15 @@ export const manageContentfulData = async (
   data?: { [payload: string]: unknown }
 ): Promise<response> => {
   const auth: string | undefined = Deno.env.get("CONTENTFUL_MANAGEMENT_ACCESS_TOKEN");
+  const path = `https://api.contentful.com/spaces/beyz5544apud/${type}`;
 
   const config: IFetchConfig = {
-    link: `https://api.contentful.com/spaces/beyz5544apud/${type}`,
+    link: path,
     object: {
       method: update ? "PUT" : "GET",
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: "application/vnd.contentful.management.v1+json",
+        "Content-Type": "application/vnd.contentful.management.v1+json",
         Host: "api.contentful.com",
         Authorization: `Bearer ${auth}`,
       },
@@ -39,13 +41,13 @@ export const manageContentfulData = async (
 
   // ootional data payload
   if(data) {
-    config.object.headers.Body = JSON.stringify(data);
+    config.object.body = JSON.stringify(data);
   }
   
   const contentfulResponse = await fetch(config.link, config.object);
   const contentfulData = await contentfulResponse.json();
 
-  return contentfulData.sys.type !== "Error"
+  return contentfulData.sys.type !== "Error" && contentfulData.sys.type === "Environment"
     ? { status: "success", data: contentfulData }
     : { status: "error", data: contentfulData };
 };
