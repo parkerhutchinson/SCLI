@@ -73,9 +73,10 @@ export const manageContentfulData = async (
  */
 export const getContentfulData = async (type: string): Promise<response> => {
   const auth: string | undefined = Deno.env.get("CONTENTFUL_ACCESS_TOKEN");
+  const space: string | undefined = Deno.env.get("CONTENTFUL_SPACE_ID");
 
   const config: IFetchConfig = {
-    link: `https://cdn.contentful.com/spaces/beyz5544apud/${type}?access_token=${auth}`,
+    link: `https://cdn.contentful.com/spaces/${space}/${type}?access_token=${auth}`,
     object: {
       method: "GET",
       headers: {
