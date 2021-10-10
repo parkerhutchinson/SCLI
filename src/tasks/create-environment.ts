@@ -1,31 +1,23 @@
 import log from "../utils/log.ts";
 import { Task } from "../types/task.d.ts";
 import { manageContentfulData } from "../lib/contentful-data.ts";
-import getFlags from "../utils/get-flags.ts";
 
-interface Flags {
-  name: string;
-}
+
+const flagValidation = ['name', 'location']
 
 /**
  * @description creates a new environment given a name and also assigns access tokens to new environment
  * @param name string: the environment name
  * @returns
  */
-const createEnvironment = async (args: string[]) => {
-  const flags: Flags = getFlags(args);
-
-  if (!flags["name"]) {
-    log("name flag not provided", "red");
-    return;
-  }
-
-  log(`creating environment ${flags["name"]}`, "green");
+const createEnvironment = async (args: {[flag: string]: string}) => {
+  console.log(args)
+  log(`creating environment ${args.name}`, "green");
 
   const { 
     status: environmentStatus, 
     data: environmentData
-  } = await manageContentfulData(`environments/${flags["name"]}`, "PUT", {Name: flags["name"],});
+  } = await manageContentfulData(`environments/${args.name}`, "PUT", {Name: args.name,});
   
   if (environmentStatus === "error") {
     log(environmentData.message, "red");
@@ -39,7 +31,8 @@ const createEnvironment = async (args: string[]) => {
 
 const createEnvironmentTask: Task = {
   name: "create-env",
-  exec: async (args: string[]) => await createEnvironment(args),
+  requiredFlags: flagValidation,
+  exec: async (args: {[flag: string]: string}) => await createEnvironment(args),
 };
 
 export default createEnvironmentTask;

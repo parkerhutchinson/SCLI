@@ -1,23 +1,16 @@
 import log from "../utils/log.ts";
 import { Task } from "../types/task.d.ts";
 import { manageContentfulData } from "../lib/contentful-data.ts";
-import getFlags from "../utils/get-flags.ts";
-
-
-interface Flags {
-  name: string
-}
 
 /**
  * @description deletes a chosen environment
  * @param args string[]: this expects name to be present
  */
-const deleteEnvironment = async (args:string[]) => {
-  const flags:Flags = getFlags(args);
+const deleteEnvironment = async (args: {[flag: string]: string}) => {
 
-  log(`deleting the ${flags['name']} environment`, "cyan");
+  log(`deleting the ${args.name} environment`, "cyan");
 
-  const {status, data} = await manageContentfulData(`environments/${flags['name']}`, "DELETE");
+  const {status, data} = await manageContentfulData(`environments/${args.name}`, "DELETE");
 
   console.log(data);
 
@@ -25,7 +18,8 @@ const deleteEnvironment = async (args:string[]) => {
 
 const deleteEnvironmentTask:Task = {
   name: 'del-env',
-  exec: async (args:string[]) => await deleteEnvironment(args)
+  requiredFlags: ['name'],
+  exec: async (args:{[flag: string]: string}) => await deleteEnvironment(args)
 }
 
 export default deleteEnvironmentTask;

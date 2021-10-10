@@ -1,4 +1,5 @@
 export interface Task {
   name: string
-  exec: (args:string[]) => Promise<unknown>
+  requiredFlags?: string[]
+  exec: (args:{[index: string]: string}) => Promise<unknown>
 }

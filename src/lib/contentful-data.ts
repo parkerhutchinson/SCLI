@@ -1,9 +1,9 @@
 interface IFetchConfig {
-  link: string;
+  link: string
   object: {
-    method: string;
-    headers: { [index: string]: string };
-    body?: string;
+    method: string
+    headers: { [index: string]: string }
+    body?: string
   };
 }
 
@@ -12,6 +12,8 @@ type response = {
   data: { [index: string]: unknown }
 }
 
+const CONTENTFUL_API = "https://api.contentful.com";
+const CONTENTFUL_CDN = "https://cdn.contentful.com";
 
 /**
  * @description this function allows you to make updates to contentful and
@@ -26,7 +28,7 @@ export const manageContentfulData = async (
 ): Promise<response> => {
   const CMA: string | undefined = Deno.env.get("CONTENTFUL_MANAGEMENT_ACCESS_TOKEN");
   const space: string | undefined = Deno.env.get("CONTENTFUL_SPACE_ID");
-  const resourcePath = `https://api.contentful.com/spaces/${space}/${type}`;
+  const resourcePath = `${CONTENTFUL_API}/spaces/${space}/${type}`;
   let contentfulData;
 
   const config: IFetchConfig = {
@@ -77,7 +79,7 @@ export const getContentfulData = async (type: string): Promise<response> => {
   const space: string | undefined = Deno.env.get("CONTENTFUL_SPACE_ID");
 
   const config: IFetchConfig = {
-    link: `https://cdn.contentful.com/spaces/${space}/${type}?access_token=${CMA}`,
+    link: `${CONTENTFUL_CDN}/spaces/${space}/${type}?access_token=${CMA}`,
     object: {
       method: "GET",
       headers: {
