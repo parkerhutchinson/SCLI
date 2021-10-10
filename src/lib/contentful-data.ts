@@ -25,7 +25,8 @@ export const manageContentfulData = async (
   data?: { [payload: string]: unknown }
 ): Promise<response> => {
   const CMA: string | undefined = Deno.env.get("CONTENTFUL_MANAGEMENT_ACCESS_TOKEN");
-  const resourcePath = `https://api.contentful.com/spaces/beyz5544apud/${type}`;
+  const space: string | undefined = Deno.env.get("CONTENTFUL_SPACE_ID");
+  const resourcePath = `https://api.contentful.com/spaces/${space}/${type}`;
   let contentfulData;
 
   const config: IFetchConfig = {
@@ -72,11 +73,11 @@ export const manageContentfulData = async (
  * @returns Promise: contentful data || error message
  */
 export const getContentfulData = async (type: string): Promise<response> => {
-  const auth: string | undefined = Deno.env.get("CONTENTFUL_ACCESS_TOKEN");
+  const CMA: string | undefined = Deno.env.get("CONTENTFUL_ACCESS_TOKEN");
   const space: string | undefined = Deno.env.get("CONTENTFUL_SPACE_ID");
 
   const config: IFetchConfig = {
-    link: `https://cdn.contentful.com/spaces/${space}/${type}?access_token=${auth}`,
+    link: `https://cdn.contentful.com/spaces/${space}/${type}?access_token=${CMA}`,
     object: {
       method: "GET",
       headers: {
