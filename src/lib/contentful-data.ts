@@ -24,18 +24,19 @@ export const manageContentfulData = async (
   method: "GET"|"PUT"|"DELETE",
   data?: { [payload: string]: unknown }
 ): Promise<response> => {
-  const auth: string | undefined = Deno.env.get("CONTENTFUL_MANAGEMENT_ACCESS_TOKEN");
-  const path = `https://api.contentful.com/spaces/beyz5544apud/${type}`;
+  const CMA: string | undefined = Deno.env.get("CONTENTFUL_MANAGEMENT_ACCESS_TOKEN");
+  const resourcePath = `https://api.contentful.com/spaces/beyz5544apud/${type}`;
+  let contentfulData;
 
   const config: IFetchConfig = {
-    link: path,
+    link: resourcePath,
     object: {
       method: method,
       headers: {
         Accept: "application/vnd.contentful.management.v1+json",
         "Content-Type": "application/vnd.contentful.management.v1+json",
         Host: "api.contentful.com",
-        Authorization: `Bearer ${auth}`,
+        Authorization: `Bearer ${CMA}`,
       },
     },
   };
@@ -46,8 +47,7 @@ export const manageContentfulData = async (
   }
   
   const contentfulResponse = await fetch(config.link, config.object);
-  let contentfulData;
-
+  
   // since no body is returned for a successful deletion we do this
   if (contentfulResponse.status === 204) {
     contentfulData = {
