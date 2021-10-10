@@ -12,6 +12,7 @@ type response = {
   data: { [index: string]: unknown }
 }
 
+
 /**
  * @description this function allows you to make updates to contentful and
  * gains access to some other hidden features like listing environments.
@@ -20,7 +21,7 @@ type response = {
  */
 export const manageContentfulData = async (
   type: string,
-  update: boolean,
+  method: "GET"|"PUT"|"DELETE",
   data?: { [payload: string]: unknown }
 ): Promise<response> => {
   const auth: string | undefined = Deno.env.get("CONTENTFUL_MANAGEMENT_ACCESS_TOKEN");
@@ -29,7 +30,7 @@ export const manageContentfulData = async (
   const config: IFetchConfig = {
     link: path,
     object: {
-      method: update ? "PUT" : "GET",
+      method: method,
       headers: {
         Accept: "application/vnd.contentful.management.v1+json",
         "Content-Type": "application/vnd.contentful.management.v1+json",
@@ -45,9 +46,21 @@ export const manageContentfulData = async (
   }
   
   const contentfulResponse = await fetch(config.link, config.object);
-  const contentfulData = await contentfulResponse.json();
+  let contentfulData;
 
-  return contentfulData.sys.type !== "Error" && contentfulData.sys.type === "Environment"
+  // since no body is returned for a successful deletion we do this
+  if (contentfulResponse.status === 204) {
+    contentfulData = {
+      message: contentfulResponse.statusText,
+      sys: {
+        type: "success",
+      }
+    }
+  } else {
+    contentfulData = await contentfulResponse.json();
+  }
+
+  return contentfulData.sys.type !== "Error" || contentfulData.sys.type === "Environment"
     ? { status: "success", data: contentfulData }
     : { status: "error", data: contentfulData };
 };

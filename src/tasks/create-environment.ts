@@ -1,7 +1,7 @@
 import log from "../utils/log.ts";
 import { Task } from "../types/task.d.ts";
 import { manageContentfulData } from "../lib/contentful-data.ts";
-import yargs from "https://cdn.deno.land/yargs/versions/yargs-v16.2.1-deno/raw/deno.ts";
+import getFlags from "../utils/get-flags.ts";
 
 interface Flags {
   name: string;
@@ -13,7 +13,7 @@ interface Flags {
  * @returns
  */
 const createEnvironment = async (args: string[]) => {
-  const flags: Flags = yargs(args).argv;
+  const flags: Flags = getFlags(args);
 
   if (!flags["name"]) {
     log("name flag not provided", "red");
@@ -25,8 +25,8 @@ const createEnvironment = async (args: string[]) => {
   const { 
     status: environmentStatus, 
     data: environmentData
-  } = await manageContentfulData(`environments/${flags["name"]}`, true, {Name: flags["name"],});
-
+  } = await manageContentfulData(`environments/${flags["name"]}`, "PUT", {Name: flags["name"],});
+  
   if (environmentStatus === "error") {
     log(environmentData.message, "red");
   } else {
