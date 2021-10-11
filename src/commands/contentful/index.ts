@@ -1,13 +1,12 @@
 import createEnvironmentTask from "../../tasks/create-environment.ts";
 import deleteEnvironmentTask from "../../tasks/delete-environment.ts";
-import { Task } from "../../types/task.d.ts";
 import { Command } from "../../types/command.d.ts";
-import taskRunner from "../../utils/task-runner.ts";
+import commandRunner from "../../utils/command-runner.ts";
 
-const subTasks: Task[] = [createEnvironmentTask, deleteEnvironmentTask];
+const subTasks: Command[] = [createEnvironmentTask, deleteEnvironmentTask];
 
 const contentful = async (args: string[]): Promise<void> => {
-  await taskRunner(subTasks, args);
+  await commandRunner(subTasks, args);
 };
 
 const contentfulCommand:Command = {

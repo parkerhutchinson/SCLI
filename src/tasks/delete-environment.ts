@@ -1,6 +1,8 @@
 import log from "../utils/log.ts";
-import { Task } from "../types/task.d.ts";
+import { Command } from "../types/command.d.ts";
 import { manageContentfulData } from "../lib/contentful-data.ts";
+import getFlags from "../utils/get-flags.ts";
+
 
 /**
  * @description deletes a chosen environment
@@ -16,10 +18,10 @@ const deleteEnvironment = async (args: {[flag: string]: string}) => {
 
 }
 
-const deleteEnvironmentTask:Task = {
+const deleteEnvironmentTask:Command = {
   name: 'del-env',
   requiredFlags: ['name'],
-  exec: async (args:{[flag: string]: string}) => await deleteEnvironment(args)
+  exec: async (args: string[]) => await deleteEnvironment(getFlags(args))
 }
 
 export default deleteEnvironmentTask;

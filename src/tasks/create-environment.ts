@@ -1,9 +1,9 @@
 import log from "../utils/log.ts";
-import { Task } from "../types/task.d.ts";
+import { Command } from "../types/command.d.ts";
 import { manageContentfulData } from "../lib/contentful-data.ts";
+import getFlags from "../utils/get-flags.ts";
 
 
-const flagValidation = ['name', 'location']
 
 /**
  * @description creates a new environment given a name and also assigns access tokens to new environment
@@ -29,10 +29,10 @@ const createEnvironment = async (args: {[flag: string]: string}) => {
   }
 };
 
-const createEnvironmentTask: Task = {
+const createEnvironmentTask: Command = {
   name: "create-env",
-  requiredFlags: flagValidation,
-  exec: async (args: {[flag: string]: string}) => await createEnvironment(args),
+  requiredFlags: ['name'],
+  exec: async (args: string[]) => await createEnvironment(getFlags(args)),
 };
 
 export default createEnvironmentTask;
