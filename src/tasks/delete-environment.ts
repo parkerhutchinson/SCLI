@@ -9,7 +9,7 @@ import { manageContentfulData } from "../lib/contentful-data.ts";
  */
 const deleteEnvironment = async (args: Flags) => {
 
-  log(`deleting the ${args.name} environment`, "cyan");
+  log(`\ndeleting the ${args.name} environment`, "cyan");
 
   const {status, data} = await manageContentfulData(`environments/${args.name}`, "DELETE");
 

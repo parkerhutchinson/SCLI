@@ -9,7 +9,7 @@ import { manageContentfulData } from "../lib/contentful-data.ts";
  * @returns
  */
 const createEnvironment = async (args: Flags) => {
-  log(`creating environment ${args.name}`, "green");
+  log(`\ncreating environment ${args.name}`, "green");
 
   const { 
     status: environmentStatus, 
@@ -20,7 +20,7 @@ const createEnvironment = async (args: Flags) => {
     log(environmentData.message, "red");
   } else {
     log(
-      `Environment ${environmentData.name} has successfully been requested for creation. This task may take several minutes to resolve.`,
+      `\nEnvironment ${environmentData.name} has successfully been requested for creation. This task may take several minutes to resolve.`,
       "cyan"
     );
   }
