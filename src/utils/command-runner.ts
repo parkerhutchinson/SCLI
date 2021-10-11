@@ -1,7 +1,5 @@
 import log from "./log.ts";
 import { Command, Flags } from "../types/command.d.ts";
-import getFlags from "./get-flags.ts";
-
 
 
 /**
@@ -10,7 +8,7 @@ import getFlags from "./get-flags.ts";
  * @param args string[] array of args passed from the command scope
  */
 const commandRunner = async (commands: Command[], args: Flags) => {
-  const {_: commandArgs, $0, ...flags} = args;
+  const {_: commandArgs, _$0, ...flags} = args;
   const needHelp = typeof flags['h'] !== 'undefined';
   const commandFlags = flags;
 
@@ -22,12 +20,13 @@ const commandRunner = async (commands: Command[], args: Flags) => {
     if(commandArgs.includes(command.name)) {
       commandSupplied = true;
 
-      // log docs if help is passed and docs exist on the command
+      // display docs if help is passed and docs exist on the command
       // otherwise its up to the user to define how docs display
       if (needHelp && typeof command.docs !== 'undefined') {
         console.log(command.docs);
       } else {
         if (command.requiredFlags) {
+          // ensure that the required flags exist
           command.requiredFlags.forEach((flag) => {
             if (typeof commandFlags[flag] === 'undefined') {
               flagErrors = true;
