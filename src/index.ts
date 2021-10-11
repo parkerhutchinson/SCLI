@@ -1,10 +1,7 @@
-import { Command } from "./types/command.d.ts";
 import contentfulCommand from "./commands/contentful/index.ts";
+import commandRunner from "./utils/command-runner.ts";
+import getFlags from "./utils/get-flags.ts";
 
 
-const COMMANDS:Command[] = [contentfulCommand];
-
-COMMANDS.forEach(
-  (command: Command) => 
-    Deno.args[0] === command.name && command.exec(Deno.args)
-);
+// this is all you have to write to make this work
+await commandRunner([contentfulCommand], getFlags(Deno.args));

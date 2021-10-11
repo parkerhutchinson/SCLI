@@ -1,8 +1,6 @@
 import log from "../utils/log.ts";
-import { Command } from "../types/command.d.ts";
+import { Command, Flags } from "../types/command.d.ts";
 import { manageContentfulData } from "../lib/contentful-data.ts";
-import getFlags from "../utils/get-flags.ts";
-
 
 
 /**
@@ -10,8 +8,7 @@ import getFlags from "../utils/get-flags.ts";
  * @param name string: the environment name
  * @returns
  */
-const createEnvironment = async (args: {[flag: string]: string}) => {
-  console.log(args)
+const createEnvironment = async (args: Flags) => {
   log(`creating environment ${args.name}`, "green");
 
   const { 
@@ -29,10 +26,11 @@ const createEnvironment = async (args: {[flag: string]: string}) => {
   }
 };
 
+
 const createEnvironmentTask: Command = {
   name: "create-env",
   requiredFlags: ['name'],
-  exec: async (args: string[]) => await createEnvironment(getFlags(args)),
+  exec: async (args: Flags) => await createEnvironment(args),
 };
 
 export default createEnvironmentTask;
