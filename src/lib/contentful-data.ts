@@ -2,14 +2,14 @@ interface IFetchConfig {
   link: string
   object: {
     method: string
-    headers: { [index: string]: string }
+    headers: { [header: string]: string }
     body?: string
   };
 }
 
 type response = {
   status: "success"|"error",
-  data: { [index: string]: unknown }
+  data: { [data: string]: unknown }
 }
 
 const CONTENTFUL_API = "https://api.contentful.com";
