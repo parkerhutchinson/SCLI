@@ -1,6 +1,7 @@
 export interface Command {
   name: string,
   docs?: string,
+  options?: {[option:string]:unknown},
   requiredFlags?: string[]
   exec: (args:Flags) => Promise<unknown>
 }

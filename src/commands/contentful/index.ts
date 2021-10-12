@@ -15,6 +15,7 @@ if they need to display docs a certain way the command itself can do that and we
 const contentfulCommand:Command = {
   name: 'contentful',
   docs: contentfulHelp,
+  options: {parent: true},
   exec: async (args:Flags) => await contentful(args)
 }
 

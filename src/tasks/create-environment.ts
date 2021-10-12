@@ -30,6 +30,7 @@ const createEnvironment = async (args: Flags) => {
 const createEnvironmentTask: Command = {
   name: "create-env",
   requiredFlags: ['name'],
+  docs: "\nsome help would be nice\n",
   exec: async (args: Flags) => await createEnvironment(args),
 };
 
