@@ -11,7 +11,7 @@ const deleteEnvironment = async (args: Flags) => {
 
   log(`\ndeleting the ${args.name} environment`, "cyan");
 
-  const {status, data} = await manageContentfulData(`environments/${args.name}`, "DELETE");
+  const {status: _, data} = await manageContentfulData(`environments/${args.name}`, "DELETE");
 
   console.log(data);
 

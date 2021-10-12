@@ -4,7 +4,6 @@ import { Command, Flags } from "../../types/command.d.ts";
 import commandRunner from "../../utils/command-runner.ts";
 
 
-// cli contentful subcommand --flag
 const contentful = async (args: Flags): Promise<void> => {
   await commandRunner([createEnvironmentTask, deleteEnvironmentTask], args);
 };
