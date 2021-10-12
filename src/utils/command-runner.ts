@@ -1,6 +1,8 @@
 import log from "./log.ts";
 import { Command, Flags } from "../types/command.d.ts";
 
+// right now the only option is parent but if we need 
+// more options we have this in place already.
 const defaultOpts = {
   parent: false,
 };

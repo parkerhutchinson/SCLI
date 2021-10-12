@@ -18,9 +18,9 @@ const deleteEnvironment = async (args: Flags) => {
 }
 
 const deleteEnvironmentTask:Command = {
-  name: 'del-env',
+  name: 'delete-env',
   requiredFlags: ['name'],
-  docs: '\n --name is used to determine the environment to delete',
+  docs: "\n delete-env will delete a contentful environment given --name's value \n",
   exec: async (args: Flags) => await deleteEnvironment(args)
 }
 
