@@ -1,7 +1,7 @@
 
 /**
  * @description small wrapper around running subprocesses
- * @param commands string[]: array of commands to run.
+ * @param {string[]} commands: array of commands to run.
  */
 const run = async (commands: string[]): Promise<void> => {
   const p = Deno.run({

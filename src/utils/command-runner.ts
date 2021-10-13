@@ -7,9 +7,10 @@ const defaultOpts = {
 };
 
 /**
- * @description simple task runner wrapper that allows infinite subtask nesting
- * @param commands Commands[] array of tasks to execute
- * @param args string[] array of args passed from the command scope
+ * @description command runner that takes an array of commands and arguments and runs them based on user
+ * supplied data from the command line. this handles flag validation, parent and sub commands, and documentation.
+ * @param {Command[]} commands: array of commands to execute
+ * @param {string[]} args: array of args passed from the command scope
  */
 const commandRunner = async (commands: Command[], args: Flags) => {
   const { _: commandArgs, _$0, ...flags } = args;
