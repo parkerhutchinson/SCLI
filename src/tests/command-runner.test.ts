@@ -3,7 +3,7 @@ import commandRunner from "../utils/command-runner.ts";
 import getFlags from "../utils/get-flags.ts";
 import {Command, Flags} from "../types/command.d.ts";
 
-const testCommand = async (args:Flags) => {
+const testCommand = async (_args:Flags) => {
   await 'hello world'
 }
 
