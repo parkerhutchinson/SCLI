@@ -3,7 +3,7 @@ export interface Command {
   docs?: string,
   options?: {[option:string]:unknown},
   requiredFlags?: string[]
-  exec: (args:Flags) => Promise<unknown>
+  exec: (args:Flags) => unknown
 }
 
 export interface Flags {
