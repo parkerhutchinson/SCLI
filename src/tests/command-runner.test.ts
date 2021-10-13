@@ -24,7 +24,6 @@ Deno.test('Command Runner has --name flag', async () => {
   assertEquals(runner?.args.name, 'hello world');
 });
 
-
 const testCommandObjRequiredFlags:Command = {
   name: 'test',
   requiredFlags: ['name'],
