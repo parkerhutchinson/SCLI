@@ -5,14 +5,14 @@ import {Command, Flags} from "../types/command.d.ts";
 
 const testCommand = async (_args:Flags) => {
   await 'hello world'
-}
+};
 
 const testCommandObj:Command = {
   name: 'test',
   docs: 'hello docs',
   options: {debug: true},
   exec:  async (args:Flags) => await testCommand(args)
-}
+};
 
 Deno.test('Command Runner runs', async () => {
   const runner = await commandRunner([testCommandObj], getFlags(['test']));
@@ -29,7 +29,7 @@ const testCommandObjRequiredFlags:Command = {
   requiredFlags: ['name'],
   options: {debug: true},
   exec:  async (args:Flags) => await testCommand(args)
-}
+};
 
 Deno.test('Command Runner is missing --name flag', async () => {
   const runner = await commandRunner([testCommandObjRequiredFlags], getFlags(['test']));
@@ -43,4 +43,4 @@ Deno.test('Command runner has docs', async () => {
   const runner = await commandRunner([testCommandObj], getFlags(['test']));
   const hasDocs = typeof runner?.command.docs !== 'undefined';
   assertEquals(hasDocs, true);
-})
+});
