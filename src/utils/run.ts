@@ -4,11 +4,11 @@
  * @param {string[]} commands: array of commands to run.
  */
 const run = async (commands: string[]): Promise<void> => {
-  const p = Deno.run({
+  const p = await Deno.run({
     cmd: commands,
     stdout: "inherit",
   });
-  
+
   const { code } = await p.status();
   
   if (code !== 0) {

@@ -1,3 +1,4 @@
 .vscode/
 scli
 .DS_Store
+migrations/

@@ -9,3 +9,18 @@ export const writeEnvFile = async (env:string) => {
     console.log(err);
   }
 }
+
+
+export const readEnvFile = async (): Promise<string> => {
+  let response;
+  try {
+    response = await Deno.readFileSync(`${Deno.env.get("HOME")}/.scli`);
+    const decoder = new TextDecoder("utf-8");
+    const fileContents = decoder.decode(response);
+    response = JSON.parse(fileContents).env;
+  } catch(e) {
+    console.log(e.message);
+  }
+  
+  return response;
+}
