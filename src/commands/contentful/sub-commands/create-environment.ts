@@ -1,7 +1,7 @@
-import log from "../utils/log.ts";
-import { Command, Flags } from "../types/command.d.ts";
-import { manageContentfulData } from "../lib/contentful-data.ts";
-import { writeEnvFile } from "../lib/env-io.ts";
+import log from "../../../utils/log.ts";
+import { Command, Flags } from "../../../types/command.d.ts";
+import { manageContentfulData } from "../../../lib/contentful-data.ts";
+import { writeEnvFile } from "../../../lib/env-io.ts";
 
 
 /**
@@ -10,7 +10,6 @@ import { writeEnvFile } from "../lib/env-io.ts";
  * @returns
  */
 const createEnvironment = async (args: Flags) => {
-
 
   log(`\ncreating environment ${args.name}`, "green");
 
@@ -32,11 +31,11 @@ const createEnvironment = async (args: Flags) => {
 };
 
 
-const createEnvironmentTask: Command = {
+const createEnvironmentCommand: Command = {
   name: "create-env",
   requiredFlags: ['name'],
   docs: "\n create-env will create a new contentful environment given --name's value \n",
   exec: async (args: Flags) => await createEnvironment(args),
 };
 
-export default createEnvironmentTask;
+export default createEnvironmentCommand;

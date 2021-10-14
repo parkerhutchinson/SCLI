@@ -1,11 +1,11 @@
-import createEnvironmentTask from "../../tasks/create-environment.ts";
-import deleteEnvironmentTask from "../../tasks/delete-environment.ts";
+import createEnvironmentCommand from "./sub-commands/create-environment.ts";
+import deleteEnvironmentCommand from "./sub-commands/delete-environment.ts";
 import { Command, Flags } from "../../types/command.d.ts";
 import commandRunner from "../../utils/command-runner.ts";
 
 
 const contentful = async (args: Flags): Promise<void> => {
-  await commandRunner([createEnvironmentTask, deleteEnvironmentTask], args);
+  await commandRunner([createEnvironmentCommand, deleteEnvironmentCommand], args);
 };
 
 const contentfulHelp = `\nIf the user needs docs they can write them like this and supply them to the docs prop of the command object. otherwise
