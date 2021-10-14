@@ -1,6 +1,7 @@
 import log from "../utils/log.ts";
 import { Command, Flags } from "../types/command.d.ts";
 import { manageContentfulData } from "../lib/contentful-data.ts";
+import { writeEnvFile } from "../lib/env-io.ts";
 
 
 /**
@@ -9,6 +10,8 @@ import { manageContentfulData } from "../lib/contentful-data.ts";
  * @returns
  */
 const createEnvironment = async (args: Flags) => {
+
+
   log(`\ncreating environment ${args.name}`, "green");
 
   const { 
@@ -19,6 +22,7 @@ const createEnvironment = async (args: Flags) => {
   if (environmentStatus === "error") {
     log(environmentData.message, "red");
   } else {
+    await writeEnvFile(args.name);
     log(
       `\nEnvironment ${environmentData.name} has successfully been requested for creation. This task may take several minutes to resolve.`,
       "cyan"
