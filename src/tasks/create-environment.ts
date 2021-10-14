@@ -22,6 +22,7 @@ const createEnvironment = async (args: Flags) => {
   if (environmentStatus === "error") {
     log(environmentData.message, "red");
   } else {
+    // @ts-ignore: we know this will be a string and not a string[]
     await writeEnvFile(args.name);
     log(
       `\nEnvironment ${environmentData.name} has successfully been requested for creation. This task may take several minutes to resolve.`,

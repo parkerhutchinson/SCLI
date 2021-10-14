@@ -9,5 +9,5 @@ export interface Command {
 export interface Flags {
   _: string[],
   $0: string,
-  [key: string]:any
+  [key: string]:string | string[]
 }
