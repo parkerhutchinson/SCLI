@@ -10,7 +10,7 @@ const runMigrations = async (args:Flags) => {
   const envId: string | undefined = await readEnvFile();
 
   if (dryRun) {
-    console.log('executing dry on pending migrations');
+    log('executing dry on pending migrations', "cyan");
   }
 
   console.log(`\n running pending migrations on ${envId} environment \n`);
