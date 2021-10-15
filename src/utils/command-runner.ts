@@ -9,8 +9,8 @@ const defaultOpts = {
 /**
  * @description command runner that takes an array of commands and arguments and runs them based on user
  * supplied data from the command line. this handles flag validation, parent and sub commands, and documentation.
- * @param {Command[]} commands: array of commands to execute
- * @param {string[]} args: array of args passed from the command scope
+ * @param {Command[]} commands: array of Command objects to execute
+ * @param {Object} args: Flag args passed from the command scope
  */
 const commandRunner = async (commands: Command[], args: Flags) => {
   const { _: commandArgs, _$0, ...flags } = args;
@@ -40,7 +40,7 @@ const commandRunner = async (commands: Command[], args: Flags) => {
             }
           });
         }
-
+        // exec the command if there are no flag error and we are not in debug mode
         (!flagErrors && !options.debug) && await command.exec(args);
       }
     }
