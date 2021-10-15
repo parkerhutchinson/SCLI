@@ -3,6 +3,15 @@ import log from "../../../utils/log.ts";
 import { Command, Flags } from "../../../types/command.d.ts";
 import {readEnvFile} from "../../../lib/env-io.ts";
 
+
+/**
+ * @description this is a wrapper for a an existing cli tool called contentful-migrate. 
+ * This lets me manage contentful migrations closer to what you'd expect from other ORMs like in Django.
+ * This has two modes. one where it runs all pending migrations and writes the changes to disk on the contentful db.
+ * and two the dry-run which runs the migrations without committing them to disk for error checking.
+ * @param args 
+ * @property {bool} d: flag for running a dry-run on the pending migrations so we can spot check if any errors arise.
+ */
 const runMigrations = async (args:Flags) => {
   const dryRun = args['d'];
   const spaceId: string | undefined = Deno.env.get("CONTENTFUL_SPACE_ID");

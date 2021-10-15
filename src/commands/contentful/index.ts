@@ -5,7 +5,11 @@ import runMigrationsCommand from "./sub-commands/run-migrations.ts";
 import { Command, Flags } from "../../types/command.d.ts";
 import commandRunner from "../../utils/command-runner.ts";
 
-
+/**
+ * @description parent command that does nothing other than supply a namespace context for its subcommands. 
+ * $scli contentful set-env --name, $scli contentful run-migrations -d . for example.
+ * @param args 
+ */
 const contentful = async (args: Flags): Promise<void> => {
   await commandRunner([
     createEnvironmentCommand, 
