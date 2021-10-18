@@ -55,12 +55,12 @@ Creates a new environment clone from master using the management API. It creates
 
 | Argument | Description |
 |:--|:--|
-| env-name | A lowercase dash concatenate value. This creates a new contentful environment and sets it to active in a local configuration file.  |
+| --name | A lowercase dash concatenate value. This creates a new contentful environment and sets it to active in a local configuration file.  |
 
 Examples:
 
 ```
-$ acli contentful create-environment cat-bug 
+$ scli contentful create-env --name cat-bug 
 
 // creates environment cat-bug, sets local migration target to cat-bug.
 ```
@@ -75,10 +75,10 @@ Manually sets the active environment for migration use.
 
 | Argument | Description |
 |:--|:--|
-| env-name | A lowercase dash concatenate value. This will set the active environment locally |
+| --name | A lowercase dash concatenate value. This will set the active environment locally |
 
 ```
-$ acli contentful set-environment jake-the-dog
+$ scli contentful set-env --name jake-the-dog
 
 // manually sets migration target to jake-the-dog
 ```
@@ -90,7 +90,7 @@ $ acli contentful set-environment jake-the-dog
 Show the current active environment. 
 
 ```
-$ acli contentful show-environment
+$ scli contentful show-environment
 ```
 
 ***
@@ -101,11 +101,11 @@ Creates a new migration stub in your src/migrations directory given a content ty
 
 | Flag | Value | Description
 |:--|:--|:--|
-| -c | content-type | The name of the content type you want to work on. you can use existing content types here and it will append a new migration to the content types subdirectory in src/migrations/content-type eg cta, midpage-hero, image-text-stack etc. |
-| -m | migration-name | The name of the migration you want to create. you should name this as a small description of the work you are doing eg cta-boolean-field-additions or cta-init |
+| --content-type | content-type | The name of the content type you want to work on. you can use existing content types here and it will append a new migration to the content types subdirectory in src/migrations/content-type eg cta, midpage-hero, image-text-stack etc. |
+| --name | migration-name | The name of the migration you want to create. you should name this as a small description of the work you are doing eg cta-boolean-field-additions or cta-init |
 
 ```
-$ acli contentful create-migration -c bimo -m add-battery-pack
+$ scli contentful create-migration --content-type bimo --name add-battery-pack
 
 /src/migrations/bimo/${timestamp}_add-battery-pack.js
 
@@ -113,7 +113,7 @@ $ acli contentful create-migration -c bimo -m add-battery-pack
 ```
 
 ```
-$ acli contentful create-migration -c bimo -m remove-battery-pack
+$ scli contentful create-migration -c bimo -m remove-battery-pack
 
 /src/migrations/bimo/${timestamp}_remove-battery-pack.js
 
@@ -131,13 +131,13 @@ Runs any pending migrations you've created. This runs the "up" action of all pen
 | -d | NA | Dry-Run the migration. Get a preview of the migration you just wrote. Use this to iterate over changes before making them, confirming that the change are valid. |
 
 ```
-$ acli contentful run-migrations -d
+$ scli contentful run-migrations -d
 
 // runs all the pending migrations as a dry-run which will show a preview of the migration you want to run.
 ```
 
 ```
-$ acli contentful run-migrations
+$ scli contentful run-migrations
 
 // runs and commits all the pending migrations on the environment you set or created.
 ```
@@ -151,10 +151,10 @@ This runs the "down" action of the migration you wrote. Any down actions should 
 
 | Flag | Value | Description
 |:--|:--|:--|
-| -c | content-type | you must specify the content type you wish to run the down command on |
+| --content-type | content-type | you must specify the content type you wish to run the down command on |
 
 ```
-$ acli contentful destroy-migration -c bimo
+$ scli contentful destroy-migration --content-type bimo
 
 // runs the "down" action on the most recently ran migration for the content type "bimo".
 ```
