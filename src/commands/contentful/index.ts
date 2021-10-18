@@ -1,7 +1,9 @@
 import createEnvironmentCommand from "./sub-commands/create-environment.ts";
 import deleteEnvironmentCommand from "./sub-commands/delete-environment.ts";
 import setEnvironmentCommand from "./sub-commands/set-environment.ts";
-import runMigrationsCommand from "./sub-commands/run-migrations.ts";
+import runMigrationsUpCommand from "./sub-commands/migration-up.ts";
+import runMigrationsDownCommand from "./sub-commands/migration-down.ts";
+
 import { Command, Flags } from "../../types/command.d.ts";
 import commandRunner from "../../utils/command-runner.ts";
 
@@ -15,7 +17,8 @@ const contentful = async (args: Flags): Promise<void> => {
     createEnvironmentCommand, 
     deleteEnvironmentCommand, 
     setEnvironmentCommand,
-    runMigrationsCommand
+    runMigrationsUpCommand,
+    runMigrationsDownCommand
   ], args);
 };
 
