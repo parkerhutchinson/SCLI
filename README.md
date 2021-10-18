@@ -32,3 +32,130 @@ With this framework you can create simple commands like `scli show-date` or comp
 ### Using the CLI Framework
 
 #### Command structure
+
+Commands have a simple API to follow. The base level object requires a name and the exec prop to be set. where name is a string of the command, which can by hyphenated or separated by other punctuation like colons, and the `exec` is a async function callback. 
+
+```
+const myCommand:Command = {
+  name: 'my-command',
+  exec: async (args:Flags) => await myCommandFunc(args)
+}
+```
+
+The command runner does actually impose any limitations on how the command is written. as long as words are joined with punctuation you can write the command 
+
+
+## Commands
+
+You always access the list of commands with the parent contentful command `$ acli contentful -h`. This section helps clarify what those commands do in more detail.
+
+#### create-environment
+
+Creates a new environment clone from master using the management API. It creates a configuration value locally to tell the migrations what environment you plan on testing migrations on. This will automatically update the access tokens with permission to view the new environment.
+
+| Argument | Description |
+|:--|:--|
+| env-name | A lowercase dash concatenate value. This creates a new contentful environment and sets it to active in a local configuration file.  |
+
+Examples:
+
+```
+$ acli contentful create-environment cat-bug 
+
+// creates environment cat-bug, sets local migration target to cat-bug.
+```
+
+***
+
+**set-environment**
+
+Manually sets the active environment for migration use. 
+
+**NOTE:** This does not create a new environment in contentful, it only sets the active environment locally for migrations. 
+
+| Argument | Description |
+|:--|:--|
+| env-name | A lowercase dash concatenate value. This will set the active environment locally |
+
+```
+$ acli contentful set-environment jake-the-dog
+
+// manually sets migration target to jake-the-dog
+```
+
+***
+
+**show-environment**
+
+Show the current active environment. 
+
+```
+$ acli contentful show-environment
+```
+
+***
+
+**create-migration**
+
+Creates a new migration stub in your src/migrations directory given a content type name and a migration name. 
+
+| Flag | Value | Description
+|:--|:--|:--|
+| -c | content-type | The name of the content type you want to work on. you can use existing content types here and it will append a new migration to the content types subdirectory in src/migrations/content-type eg cta, midpage-hero, image-text-stack etc. |
+| -m | migration-name | The name of the migration you want to create. you should name this as a small description of the work you are doing eg cta-boolean-field-additions or cta-init |
+
+```
+$ acli contentful create-migration -c bimo -m add-battery-pack
+
+/src/migrations/bimo/${timestamp}_add-battery-pack.js
+
+// creates a new migration called "add-batter-pack" to the new content type "bimo".
+```
+
+```
+$ acli contentful create-migration -c bimo -m remove-battery-pack
+
+/src/migrations/bimo/${timestamp}_remove-battery-pack.js
+
+// creates a new migration "remove-battery-pack" inside the existing content type "bimo".
+```
+
+***
+
+**run-migrations**
+
+Runs any pending migrations you've created. This runs the "up" action of all pending migrations. You can also preview the migration before it commits to the contentful environment by passing the `-d` command to the end.
+
+| Flag | Value | Description
+|:--|:--|:--|
+| -d | NA | Dry-Run the migration. Get a preview of the migration you just wrote. Use this to iterate over changes before making them, confirming that the change are valid. |
+
+```
+$ acli contentful run-migrations -d
+
+// runs all the pending migrations as a dry-run which will show a preview of the migration you want to run.
+```
+
+```
+$ acli contentful run-migrations
+
+// runs and commits all the pending migrations on the environment you set or created.
+```
+***
+
+**destroy-migration**
+
+This runs the "down" action of the migration you wrote. Any down actions should undo whatever the up action implemented. You must specify the content type you want to run the down action on. 
+
+**NOTE**: You can't run destroy-migration on a content type with entries. You must delete the content before you can destroy any fields or content types. Also know that this runs in sequential order, meaning the last migration you ran will attempt the down action of that migration. Once that has run and you run destroy-migration again it will go to the previous migration and so on. 
+
+| Flag | Value | Description
+|:--|:--|:--|
+| -c | content-type | you must specify the content type you wish to run the down command on |
+
+```
+$ acli contentful destroy-migration -c bimo
+
+// runs the "down" action on the most recently ran migration for the content type "bimo".
+```
+
