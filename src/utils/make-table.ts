@@ -1,5 +1,29 @@
+interface StringStyles {
+  connector: string 
+  row: string
+  cell: string
+  eol: string
+  space: string
+}
+
+const makeVerticalRowBorder = (maxColumnLengths:number[], numberOfColumns:number, stringStyles:StringStyles):string[] => {
+  const finalString:string[] = [];
+
+  finalString.push(stringStyles.connector);
+
+  for(let i = 0; i < numberOfColumns; i++) {
+    const rowString = Array.from({length: maxColumnLengths[i] + 2}).map((_) => stringStyles.row).join("");
+    finalString.push(rowString);
+    finalString.push(stringStyles.connector);
+  }
+  
+  finalString.push(stringStyles.eol);
+
+  return finalString;
+}
+
 const printTable = async (rows: string[][]) => {
-  const finalString: string[] = [];
+  let finalString: string[] = [];
   // string length reducer
   const getMaxStringLengthReducer = (a: string, b: string): string =>
     a.length > b.length ? a : b;
@@ -14,16 +38,13 @@ const printTable = async (rows: string[][]) => {
   const stringStyles = { connector: "+", row: "-", cell: "|", eol: "\n", space: " " };
 
   rows.forEach((columns: string[], rowIndex: number) => {
-    
-    finalString.push(stringStyles.connector);
-    columns.forEach((_, colIndex:number) => {
-      const rowString = Array.from({length: maxStringLengths[colIndex] + 2}).map((_) => stringStyles.row).join("");
-      finalString.push(rowString);
-      finalString.push(stringStyles.connector);
-    });
+    // make border top
+    finalString = [...finalString, ...makeVerticalRowBorder(maxStringLengths, columns.length, stringStyles)];
 
-    finalString.push(stringStyles.eol);
+    // start row
     finalString.push(stringStyles.cell);
+
+    // generate column strings with correct padding
     columns.forEach((column: string, colIndex: number) => {
       const rightPadding =
         column.length >= maxStringLengths[colIndex]
@@ -42,14 +63,10 @@ const printTable = async (rows: string[][]) => {
     });
 
     finalString.push(stringStyles.eol);
+
+    // end the table with a final border
     if (rowIndex === rows.length - 1) {
-      finalString.push(stringStyles.connector);
-      columns.forEach((_, colIndex:number) => {
-        const rowString = Array.from({length: maxStringLengths[colIndex] + 2}).map((_) => stringStyles.row).join("");
-        finalString.push(rowString);
-        finalString.push(stringStyles.connector);
-      });
-      finalString.push(stringStyles.eol);
+      finalString = [...finalString, ...makeVerticalRowBorder(maxStringLengths, columns.length, stringStyles)];
     }  
 
   });
