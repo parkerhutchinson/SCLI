@@ -39,7 +39,7 @@ const makeVerticalRowBorder = (
  * @param {string[][]} rows: multidimensional array of strings [['header1', 'header2'],['value1','value2'],['value3','value4']]
  * @returns string
  */
-const printTable = async (rows: string[][]): Promise<string> => {
+const makeTable = async (rows: string[][]): Promise<string> => {
   let tableString: string[] = [];
   // string length reducer
   const getMaxStringLengthReducer = (a: string, b: string): string =>
@@ -108,4 +108,4 @@ const printTable = async (rows: string[][]): Promise<string> => {
   return await tableString.join("");
 };
 
-export default printTable;
+export default makeTable;
