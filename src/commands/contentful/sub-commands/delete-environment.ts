@@ -24,7 +24,6 @@ const deleteEnvironment = async (args: Flags) => {
 
   console.log(table);
 
-  await "";
 };
 
 const deleteEnvironmentCommand: Command = {
