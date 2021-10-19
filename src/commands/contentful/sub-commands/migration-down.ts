@@ -22,7 +22,7 @@ const migrationDown = async (args:Flags) => {
     log('executing dry on pending migrations', "cyan");
   }
 
-  console.log(`\n running pending migrations on ${envId} environment \n`);
+  console.log(`\n reverting last run migrations on ${envId} environment \n`);
 
   if (dryRun) {
     await run(["npx", "contentful-migrate", "down", `--access-token=${manageToken}`,`--space-id=${spaceId}`,`--environment-id=${envId}`, '-d']);
