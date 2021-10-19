@@ -79,7 +79,9 @@ const makeTable = async (rows: string[][]): Promise<string> => {
         column.length >= maxStringLengths[colIndex]
           ? 0
           : maxStringLengths[colIndex] - column.length;
-      // hey i made my own string padder, guess I didnt need to import a whole package for that.... never forget left-pad.
+          
+      // hey i made my own string padder, guess I didnt need to 
+      // import a whole package for that.... never forget left-pad.
       const columnString = column + stringStyles.space.repeat(rightPadding);
 
       // pad left 1 space + add string with pad right applied

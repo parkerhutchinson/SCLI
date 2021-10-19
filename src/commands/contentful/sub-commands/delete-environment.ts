@@ -17,9 +17,11 @@ const deleteEnvironment = async (args: Flags) => {
   // console.log(data);
 
   const table = await makeTable([
-    ["one", "two", "three"],
+    ["one", "two", "asdfasfdasdf"],
     ["1", "2", "3"],
-    ["this line should be longer", "yes it is", "oh"],
+    ["this line should be longer", "", "oh"],
+    ["this line", "", "oh"],
+    ["asdf", "yes afsd", "oasadfh"],
   ]);
 
   console.log(table);
