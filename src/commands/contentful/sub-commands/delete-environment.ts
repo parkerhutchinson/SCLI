@@ -16,13 +16,22 @@ const deleteEnvironment = async (args: Flags) => {
 
   // console.log(data);
 
-  const table = await makeTable([
+  const sampleData = [
     ["one", "two", "asdfasfdasdf"],
     ["1", "2", "3"],
     ["this line should be longer", "", "oh"],
     ["this line", "", "oh"],
     ["asdf", "yes afsd", "oasadfh"],
-  ]);
+  ];
+  const tableConfig = {
+    theme: {
+      headerTextColor: "magentaBright",
+      rowTextColor: "blue",
+      headerBorderColor: "yellow",
+      rowBorderColor: "redBright"
+    }
+  }
+  const table = await makeTable(sampleData, tableConfig);
 
   console.log(table);
 
