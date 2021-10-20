@@ -1,11 +1,11 @@
 import chalk from "https://deno.land/x/chalk_deno@v4.1.1-deno/source/index.js";
 
 interface StringStyles {
-  connector: string;
-  row: string;
-  cell: string;
-  eol: string;
-  space: string;
+  connector?: string;
+  row?: string;
+  cell?: string;
+  eol?: string;
+  space?: string;
 }
 
 interface Theme {
@@ -37,7 +37,7 @@ const defaultConfig = {
 };
 
 const chalkW = (value: string, color: string) => {
-  // since chalk for deno is trash we cant just use it inline and have to wrap
+  // since chalk for deno is trash we cant just use it inline we have to wrap
   // it because of the issues with TS and chalk.
   // @ts-ignore: fuck you chalk, you're old.
   return color === "inherit" ? value : chalk[color](value);
@@ -56,45 +56,46 @@ const makeVerticalRowBorder = (
   color: string
 ): string[] => {
   let tableString: string[] = [];
-
-  tableString.push(chalkW(stringStyles.connector, color));
+  const styles = Object.assign({}, defaultConfig.stringStyles, stringStyles);
+  tableString.push(chalkW(styles.connector, color));
 
   for (let i = 0; i < maxColumnLengths.length; i++) {
-    const rowString = chalkW(stringStyles.row, color)
+    const rowString = chalkW(styles.row, color)
       .repeat(maxColumnLengths[i] + 2)
       .split("");
     tableString = [...tableString, ...rowString];
-    tableString.push(chalkW(stringStyles.connector, color));
+    tableString.push(chalkW(styles.connector, color));
   }
 
-  tableString.push(stringStyles.eol);
+  tableString.push(styles.eol);
 
   return tableString;
 };
 
 /**
  * @description CLI helper for creating formatted tables.
- * @param {string[][]} rows: multidimensional array of strings [['header1', 'header2'],['value1','value2'],['value3','value4']]
+ * @param {string[][]} rows: multidimensional array of 
+ * strings where the first nested array is inferred as the header followed by rows 
+ * [['header1', 'header2'],['value1','value2'],['value3','value4']]
+ * @param {Config} config theming settings that not only adds colors for 
+ * header text, header border, row text, and row border. But also
+ * allows you to replace any character symbol with any other character ascii symbol you want. 
+ * if you want custom borders this is how you do it. 
  * @returns string
  */
 const makeTable = async (
   rows: string[][],
   config?: Config
 ): Promise<string> => {
-  const stringStyles = Object.assign(
-    {},
-    defaultConfig.stringStyles,
-    config?.stringStyles
-  );
+  const stringStyles = Object.assign({},defaultConfig.stringStyles,config?.stringStyles);
   const theme = Object.assign({}, defaultConfig.theme, config?.theme);
 
   let tableString: string[] = [];
 
-  // string length reducer
   const getMaxStringLengthReducer = (a: string, b: string): string =>
     a.length > b.length ? a : b;
 
-  // calculate the longest string in each column across all rows
+  // calculate the longest string in each column across all rows and return the int value of string length.
   const maxStringLengths = rows[0].map(
     (_, colIndex: number) =>
       rows
@@ -131,7 +132,7 @@ const makeTable = async (
       // import a whole package for that.... never forget left-pad.
       const columnString = column + stringStyles.space.repeat(rightPadding);
 
-      // pad left 1 space + add string with pad right applied
+      // pad left 1 space + add columnString
       tableString.push(stringStyles.space);
       tableString.push(
         chalkW(

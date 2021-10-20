@@ -23,6 +23,7 @@ const deleteEnvironment = async (args: Flags) => {
     ["this line", "", "oh"],
     ["asdf", "yes afsd", "oasadfh"],
   ];
+
   const tableConfig = {
     theme: {
       headerTextColor: "magentaBright",
@@ -30,7 +31,8 @@ const deleteEnvironment = async (args: Flags) => {
       headerBorderColor: "yellow",
       rowBorderColor: "redBright"
     }
-  }
+  };
+
   const table = await makeTable(sampleData, tableConfig);
 
   console.log(table);
