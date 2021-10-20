@@ -10,31 +10,20 @@ import makeTable from "../../../utils/make-table.ts";
 const deleteEnvironment = async (args: Flags) => {
   log(`\ndeleting the ${args.name} environment`, "cyan");
 
-  // const {status: _, data} = await manageContentfulData(`environments/${args.name}`, "DELETE");
-  // // erase the current local setting. this will cause a wanted error on run-migrations
-  // await writeEnvFile("");
+  const {status: _, data} = await manageContentfulData(`environments/${args.name}`, "DELETE");
+  // erase the current local setting. this will cause a wanted error on run-migrations
+  await writeEnvFile("");
 
-  // console.log(data);
+  console.log(data);
 
-  const sampleData = [
-    ["one", "two", "asdfasfdasdf"],
-    ["1", "2", "3"],
-    ["this line should be longer", "", "oh"],
-    ["this line", "", "oh"],
-    ["asdf", "yes afsd", "oasadfh"],
+  const tableData = [
+    ["environment",],
+    [`${args.name}`],
   ];
 
-  const tableConfig = {
-    theme: {
-      headerTextColor: "magentaBright",
-      rowTextColor: "blue",
-      headerBorderColor: "yellow",
-      rowBorderColor: "redBright"
-    }
-  };
+  const table = await makeTable(tableData);
 
-  const table = await makeTable(sampleData, tableConfig);
-
+  console.log("\n");
   console.log(table);
 
 };
