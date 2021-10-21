@@ -1,7 +1,6 @@
 import run from "../../../utils/run.ts";
 import log from "../../../utils/log.ts";
 import { Command, Flags } from "../../../types/command.d.ts";
-import {readEnvFile} from "../../../lib/env-io.ts";
 
 
 /**
