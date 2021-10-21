@@ -1,7 +1,7 @@
 import log from "../../../utils/log.ts";
 import { Command, Flags } from "../../../types/command.d.ts";
 import { manageContentfulData } from "../../../lib/contentful-data.ts";
-import { writeEnvFile } from "../../../lib/env-io.ts";
+import { writeEnvFile, readEnvFile } from "../../../lib/env-io.ts";
 import makeTable from "../../../utils/make-table.ts";
 /**
  * @description deletes a chosen environment
@@ -11,13 +11,17 @@ const deleteEnvironment = async (args: Flags) => {
   log(`\ndeleting the ${args.name} environment`, "cyan");
 
   const {status: _, data} = await manageContentfulData(`environments/${args.name}`, "DELETE");
-  // erase the current local setting. this will cause a wanted error on run-migrations
-  await writeEnvFile("");
-
+  // erase the current local setting if the environment you are deleting 
+  // is the active environment. this will cause a wanted error on run-migrations
+  const activeEnv = await readEnvFile();
+  if (activeEnv === args.name) {
+    await writeEnvFile("");
+  }
+  
   console.log(data);
 
   const tableData = [
-    ["environment",],
+    ["environment deleted",],
     [`${args.name}`],
   ];
 
