@@ -26,7 +26,7 @@ const contentful = async (args: Flags): Promise<void> => {
   ], args);
 };
 
-const contentfulHelp = `\nIf the user needs docs they can write them like this and supply them to the docs prop of the command object. otherwise
+const contentfulHelp = `\nIf the user needs docs they can write and supply them to the docs prop of the command object. otherwise
 if they need to display docs a certain way the command itself can do that and we just get out of the way\n`;
 
 const contentfulCommand:Command = {
