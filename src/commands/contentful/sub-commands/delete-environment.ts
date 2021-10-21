@@ -8,13 +8,14 @@ import makeTable from "../../../utils/make-table.ts";
  * @param args string[]: this expects name to be present
  */
 const deleteEnvironment = async (args: Flags) => {
-  log(`\ndeleting the ${args.name} environment`, "cyan");
+  const {name} = args;
+  log(`\ndeleting the ${name} environment`, "cyan");
 
   const {status: _, data} = await manageContentfulData(`environments/${args.name}`, "DELETE");
   // erase the current local setting if the environment you are deleting 
   // is the active environment. this will cause a wanted error on run-migrations
   const activeEnv = await readEnvFile();
-  if (activeEnv === args.name) {
+  if (activeEnv === name) {
     await writeEnvFile("");
   }
   
@@ -22,7 +23,7 @@ const deleteEnvironment = async (args: Flags) => {
 
   const tableData = [
     ["environment deleted",],
-    [`${args.name}`],
+    [`${name}`],
   ];
 
   const table = await makeTable(tableData);

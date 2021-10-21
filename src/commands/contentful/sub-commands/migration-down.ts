@@ -13,6 +13,7 @@ import {readEnvFile} from "../../../lib/env-io.ts";
  */
 const migrationDown = async (args:Flags) => {
   const dryRun = args['d'];
+  const {contentType} = args;
   const spaceId: string | undefined = Deno.env.get("CONTENTFUL_SPACE_ID");
   const manageToken: string | undefined = Deno.env.get("CONTENTFUL_MANAGEMENT_ACCESS_TOKEN");
   const envId: string | undefined = await readEnvFile();
@@ -24,7 +25,7 @@ const migrationDown = async (args:Flags) => {
   console.log(`\n reverting last run migrations on ${envId} environment \n`);
 
   if (dryRun) {
-    await run(["npx", "contentful-migrate", "down", `--access-token=${manageToken}`,`--space-id=${spaceId}`,`--environment-id=${envId}`, '-d']);
+    await run(["npx", "contentful-migrate", "down", `--access-token=${manageToken}`,`--space-id=${spaceId}`,`--environment-id=${envId} --content-type=${contentType}`, '-d']);
   } else {
     await run(["npx", "contentful-migrate", "down", `--access-token=${manageToken}`,`--space-id=${spaceId}`,`--environment-id=${envId}`]);
   }
@@ -33,6 +34,7 @@ const migrationDown = async (args:Flags) => {
 
 const runMigrationsDownCommand: Command = {
   name: "migration-down",
+  requiredFlags: ['content-type'],
   docs: "\n run migrations using the contentful-migrate node module(i know im running node modules from Deno lol)  \n",
   exec: async (args: Flags) => await migrationDown(args),
 };

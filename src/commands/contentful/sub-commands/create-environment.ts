@@ -10,19 +10,19 @@ import { writeEnvFile } from "../../../lib/env-io.ts";
  * @returns
  */
 const createEnvironment = async (args: Flags) => {
-
-  log(`\ncreating environment ${args.name}`, "green");
+  const {name} = args;
+  log(`\ncreating environment ${name}`, "green");
 
   const { 
     status: environmentStatus, 
     data: environmentData
-  } = await manageContentfulData(`environments/${args.name}`, "PUT", {Name: args.name,});
+  } = await manageContentfulData(`environments/${name}`, "PUT", {Name: name,});
   
   if (environmentStatus === "error") {
     log(environmentData.message, "red");
   } else {
     // @ts-ignore: we know this will be a string and not a string[]
-    await writeEnvFile(args.name);
+    await writeEnvFile(name);
     log(
       `\nEnvironment ${environmentData.name} has successfully been requested for creation. This task may take several minutes to resolve.`,
       "cyan"

@@ -10,8 +10,7 @@ import { Command, Flags } from "../../../types/command.d.ts";
  * @property {bool} d: flag for running a dry-run on the pending migrations so we can spot check if any errors arise.
  */
 const createMigration = async (args:Flags) => {
-  const contentType = args['content-type'];
-  const name = args['name'];
+  const {name, contentType} = args;
 
   log(`creating migraiton file ${name} for content type ${contentType}`, "cyan");
   

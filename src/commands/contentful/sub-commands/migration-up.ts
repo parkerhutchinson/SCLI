@@ -12,7 +12,7 @@ import {readEnvFile} from "../../../lib/env-io.ts";
  * @property {bool} d: flag for running a dry-run on the pending migrations so we can spot check if any errors arise.
  */
 const migrationUp = async (args:Flags) => {
-  const dryRun = args['d'];
+  const {d:dryRun} = args;
   const spaceId: string | undefined = Deno.env.get("CONTENTFUL_SPACE_ID");
   const manageToken: string | undefined = Deno.env.get("CONTENTFUL_MANAGEMENT_ACCESS_TOKEN");
   const envId: string | undefined = await readEnvFile();

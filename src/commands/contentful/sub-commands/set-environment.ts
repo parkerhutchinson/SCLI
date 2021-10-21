@@ -11,8 +11,8 @@ import { manageContentfulData } from "../../../lib/contentful-data.ts";
  * @returns
  */
 const setEnvironment = async (args: Flags) => {
-
-  log(`\n setting environment ${args.name} as the active environment`, "green");
+  const {name} = args;
+  log(`\n setting environment ${name} as the active environment`, "green");
   const { 
     status: environmentStatus, 
     data: environmentData
@@ -23,16 +23,16 @@ const setEnvironment = async (args: Flags) => {
   } else {
     // @ts-ignore: if there is no error then yes items does exist
     const envs = environmentData?.items.map((env:string) => env.name);
-    if (envs.includes(args.name)) {
-      // @ts-ignore: args.name is a string
-      await writeEnvFile(args.name);
+    if (envs.includes(name)) {
+      // @ts-ignore: name is a string
+      await writeEnvFile(name);
       log(
-        `\n Environment ${args.name} has been set as active.`,
+        `\n Environment ${name} has been set as active.`,
         "cyan"
       );
     } else {
       log(
-        `\n Environment ${args.name} does not exist in contentful. try creating the environment instead using create-env --name.`,
+        `\n Environment ${name} does not exist in contentful. try creating the environment instead using create-env --name.`,
         "red"
       );
     }
