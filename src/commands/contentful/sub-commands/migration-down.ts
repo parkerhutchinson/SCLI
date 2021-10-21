@@ -5,10 +5,9 @@ import {readEnvFile} from "../../../lib/env-io.ts";
 
 
 /**
- * @description this is a wrapper for a an existing cli tool called contentful-migrate. 
- * This lets me manage contentful migrations closer to what you'd expect from other ORMs like in Django.
- * This has two modes. one where it runs all pending migrations and writes the changes to disk on the contentful db.
- * and two the dry-run which runs the migrations without committing them to disk for error checking.
+ * @description the is a wrapper to contentful-migrate to run the "down" 
+ * feature of that tool which reverse the most recently run migration 
+ * given that you have supplied a "down" script.
  * @param args 
  * @property {bool} d: flag for running a dry-run on the pending migrations so we can spot check if any errors arise.
  */

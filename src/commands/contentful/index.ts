@@ -3,6 +3,7 @@ import deleteEnvironmentCommand from "./sub-commands/delete-environment.ts";
 import setEnvironmentCommand from "./sub-commands/set-environment.ts";
 import runMigrationsUpCommand from "./sub-commands/migration-up.ts";
 import runMigrationsDownCommand from "./sub-commands/migration-down.ts";
+import createMigrationCommand from "./sub-commands/create-migration.ts";
 
 import { Command, Flags } from "../../types/command.d.ts";
 import commandRunner from "../../utils/command-runner.ts";
