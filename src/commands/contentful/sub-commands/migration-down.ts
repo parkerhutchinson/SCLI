@@ -5,8 +5,8 @@ import { readEnvFile } from "../../../lib/env-io.ts";
 
 /**
  * @description the is a wrapper to contentful-migrate to run the "down"
- * feature of that tool which reverse the most recently run migration
- * given that you have supplied a "down" script.
+ * feature of that tool which reverts the most recently run migration
+ * given that you have supplied a "down" script in the migration file.
  * @param args
  * @property {bool} d: flag for running a dry-run on the pending migrations so we can spot check if any errors arise.
  */
@@ -32,7 +32,8 @@ const migrationDown = async (args: Flags) => {
       "down",
       `--access-token=${manageToken}`,
       `--space-id=${spaceId}`,
-      `--environment-id=${envId} --content-type=${contentType}`,
+      `--environment-id=${envId}`, 
+      `--content-type=${contentType}`,
       "-d",
     ]);
   } else {
@@ -42,7 +43,8 @@ const migrationDown = async (args: Flags) => {
       "down",
       `--access-token=${manageToken}`,
       `--space-id=${spaceId}`,
-      `--environment-id=${envId} --content-type=${contentType}`,
+      `--environment-id=${envId}`,
+      `--content-type=${contentType}`,
     ]);
   }
 };

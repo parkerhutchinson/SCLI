@@ -14,7 +14,7 @@ const testCommandObj:Command = {
   exec:  async (args:Flags) => await testCommand(args)
 };
 
-Deno.test('Command Runner runs', async () => {
+Deno.test('Command Runner Run', async () => {
   const runner = await commandRunner([testCommandObj], getFlags(['test']));
   assertEquals(runner?.command.name, 'test');
 });
@@ -43,4 +43,7 @@ Deno.test('Command runner has docs', async () => {
   const runner = await commandRunner([testCommandObj], getFlags(['test']));
   const hasDocs = typeof runner?.command.docs !== 'undefined';
   assertEquals(hasDocs, true);
+
+  console.log(`\n \n ====== Command Runner Runs Ends ======`)
 });
+

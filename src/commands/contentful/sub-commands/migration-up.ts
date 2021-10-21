@@ -4,9 +4,9 @@ import { Command, Flags } from "../../../types/command.d.ts";
 import { readEnvFile } from "../../../lib/env-io.ts";
 
 /**
- * @description the is a wrapper to contentful-migrate to run the "up"
- * feature of that tool which reverse the most recently run migration
- * given that you have supplied an "up" script.
+ * @description A subprocess call to contentful-migrate to run the "up"
+ * feature of that tool which writes the most recently writen migration
+ * given that you have supplied an "up" script in the migration file.
  * @param args
  * @property {bool} d: flag for running a dry-run on the pending migrations so we can spot check if any errors arise.
  */
