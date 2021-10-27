@@ -5,6 +5,7 @@ import runMigrationsUpCommand from "./sub-commands/migration-up.ts";
 import runMigrationsDownCommand from "./sub-commands/migration-down.ts";
 import createMigrationCommand from "./sub-commands/create-migration.ts";
 import showEnvironmentCommand from "./sub-commands/show-environment.ts";
+import generateTypesCommand from "./sub-commands/generate-types.ts";
 
 import { Command, Flags } from "../../types/command.d.ts";
 import commandRunner from "../../utils/command-runner.ts";
@@ -22,7 +23,8 @@ const contentful = async (args: Flags): Promise<void> => {
     runMigrationsUpCommand,
     runMigrationsDownCommand,
     createMigrationCommand,
-    showEnvironmentCommand
+    showEnvironmentCommand,
+    generateTypesCommand
   ], args);
 };
 
