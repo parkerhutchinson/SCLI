@@ -11,7 +11,7 @@ deno run --allow-env --allow-run --allow-net --allow-write --allow-read src/inde
 ### Compile
 
 ```
-deno compile --allow-env --allow-run --allow-net --allow-write --allow-read --out=scli src/index.ts
+deno compile --allow-env --allow-run --allow-net --allow-write --allow-read --output=scli src/index.ts
 ```
 
 ### Testing
