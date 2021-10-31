@@ -26,7 +26,7 @@ export const manageContentfulData = async (
   method: "GET"|"PUT"|"DELETE",
   data?: { [payload: string]: unknown }
 ): Promise<response> => {
-  const CMA: string | undefined = Deno.env.get("CONTENTFUL_MANAGEMENT_TOKEN");
+  const CMA: string | undefined = Deno.env.get("CONTENTFUL_MANAGEMENT_ACCESS_TOKEN");
   const space: string | undefined = Deno.env.get("CONTENTFUL_SPACE_ID");
   const resourcePath = `${CONTENTFUL_API}/spaces/${space}/${type}`;
   let contentfulData;
