@@ -42,12 +42,12 @@ const myCommand:Command = {
 }
 ```
 
-The command runner does actually impose any limitations on how the command is written. as long as words are joined with punctuation you can write the command 
+The command runner doesn't actually impose any limitations on how the command is written. as long as words are joined with punctuation you can write the command any way you like. `mycommand my-command command:subcommand` etc.
 
 
 ## Commands
 
-You always access the list of commands with the parent contentful command `$ acli contentful -h`. This section helps clarify what those commands do in more detail.
+You always access the list of commands with the parent contentful command e.g. `$ scli contentful -h` This section helps clarify what those commands do in more detail.
 
 #### create-environment
 
@@ -122,7 +122,7 @@ $ scli contentful create-migration -c bimo -m remove-battery-pack
 
 ***
 
-**run-migrations**
+**migration-up**
 
 Runs any pending migrations you've created. This runs the "up" action of all pending migrations. You can also preview the migration before it commits to the contentful environment by passing the `-d` command to the end.
 
@@ -131,19 +131,19 @@ Runs any pending migrations you've created. This runs the "up" action of all pen
 | -d | NA | Dry-Run the migration. Get a preview of the migration you just wrote. Use this to iterate over changes before making them, confirming that the change are valid. |
 
 ```
-$ scli contentful run-migrations -d
+$ scli contentful migration-up -d
 
 // runs all the pending migrations as a dry-run which will show a preview of the migration you want to run.
 ```
 
 ```
-$ scli contentful run-migrations
+$ scli contentful migration-up
 
 // runs and commits all the pending migrations on the environment you set or created.
 ```
 ***
 
-**destroy-migration**
+**migration-down**
 
 This runs the "down" action of the migration you wrote. Any down actions should undo whatever the up action implemented. You must specify the content type you want to run the down action on. 
 
@@ -154,7 +154,7 @@ This runs the "down" action of the migration you wrote. Any down actions should 
 | --content-type | content-type | you must specify the content type you wish to run the down command on |
 
 ```
-$ scli contentful destroy-migration --content-type bimo
+$ scli contentful migration-down --content-type bimo
 
 // runs the "down" action on the most recently ran migration for the content type "bimo".
 ```
